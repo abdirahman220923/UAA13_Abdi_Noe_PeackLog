@@ -1,0 +1,13 @@
+/Config/database.local.php
+/.env
+/vendor/
+/Storage/Logs/*
+!/Storage/Logs/.gitkeep
+
+# Configuration privee et fichiers locaux
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db

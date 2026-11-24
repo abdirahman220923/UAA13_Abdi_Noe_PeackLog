@@ -1,0 +1,19 @@
+<?php
+// Configurer les identifiants dans l'environnement du serveur PHP.
+$host = getenv('DB_HOST') ?: '127.0.0.1';
+$port = getenv('DB_PORT') ?: '3306';
+$database = getenv('DB_NAME') ?: 'PeackLog';
+$user = getenv('DB_USER') ?: '';
+$password = getenv('DB_PASSWORD') ?: '';
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$database;port=$port;charset=utf8mb4", $user, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        PDO::ATTR_EMULATE_PREPARES => false
+    ]);
+    $pdo->exec("SET time_zone = '+00:00'");
+} catch (PDOException $e) {
+    error_log($e->getMessage());
+    http_response_code(500);
+    exit("La connexion a la base de donnees a echoue. Verifie Config/dataBaseconnection.php.");
+}
